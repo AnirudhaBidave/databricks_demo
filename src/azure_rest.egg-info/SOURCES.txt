@@ -1,9 +1,12 @@
 LICENCE
+README.md
 setup.py
 src/azure_rest/__init__.py
 src/azure_rest/cost.py
+src/azure_rest/custome_role.py
 src/azure_rest/main.py
 src/azure_rest/metrics.py
+src/azure_rest/role_assignment.py
 src/azure_rest/token.py
 src/azure_rest.egg-info/PKG-INFO
 src/azure_rest.egg-info/SOURCES.txt

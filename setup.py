@@ -20,7 +20,7 @@ setup(
         "Programming Language :: Python :: 3.10",
         "Operating System :: OS Independent",
     ],
-    install_requires=["setuptools", "bson >= 0.5.10", "requests>=2.30.0", "datetime>=5.0"],
+    install_requires=["setuptools", "bson >= 0.5.10", "requests>=2.30.0", "datetime>=5.0", "uuid>=1.30", "pandas>=2.0.0"],
     extras_require={
         "dev": ["pytest>=7.0", "twine>=4.0.2"],
     },

@@ -1,4 +1,5 @@
 import requests
+import pandas as pd
 
 class CostReportError(Exception):
     pass
@@ -69,8 +70,16 @@ def cost_rep(access_token, scope, granularity, filter_name, filter_value, type='
     try:
         response = requests.post(cost_management_endpoint, headers=headers, json=body)
         response.raise_for_status()
-        return response.json()
-    
+        response = response.json()
+
+        json_data = response['properties']
+
+        columns = [col["name"] for col in json_data["columns"]]
+
+        df = pd.DataFrame(json_data["rows"], columns=columns)
+
+        print(df)
+
     except requests.exceptions.RequestException as req_err:
         raise CostReportError(f"Error during request: {req_err}")
     

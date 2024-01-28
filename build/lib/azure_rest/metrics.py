@@ -1,5 +1,6 @@
 import requests
 from datetime import datetime, timedelta
+import pandas as pd
 
 
 class metrics_Error(Exception):
@@ -50,7 +51,20 @@ def res_metrics(access_token, scope, resource_info, metricNames, hours=None, day
     try:
         metrics_response = requests.get(metrics_url, headers=headers)
         metrics_response.raise_for_status()
-        return metrics_response.json()
+        metrics_response = metrics_response.json()
+        
+        timeSpan = metrics_response['timespan']
+        metricsType = metrics_response['value'][0]['name']['value']
+        description = metrics_response['value'][0]['displayDescription']
+        json_data = metrics_response['value'][0]['timeseries'][0]['data']
+
+        df = pd.DataFrame(json_data)
+
+        df['timeStamp'] = pd.to_datetime(df['timeStamp'])
+
+        df_filtered = df[df['total'] != 0]
+
+        return(f'resourceType: {resourceType}'+'\n'+f'resourceName: {resourceName}'+'\n'+f'Time span: {timeSpan}'+'\n'+f'Metrics type: {metricsType}'+'\n'+f'Description: {description}'+'\n'+f'{df_filtered}')
     
     except requests.exceptions.RequestException as req_err:
         raise metrics_Error(f"Error during request: {req_err}")

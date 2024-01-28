@@ -78,7 +78,7 @@ def cost_rep(access_token, scope, granularity, filter_name, filter_value, type='
 
         df = pd.DataFrame(json_data["rows"], columns=columns)
 
-        print(df)
+        return df
 
     except requests.exceptions.RequestException as req_err:
         raise CostReportError(f"Error during request: {req_err}")
